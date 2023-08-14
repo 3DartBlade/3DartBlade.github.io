@@ -1,0 +1,48 @@
+body {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+.content {
+    margin: 2% 10%;
+    margin-bottom: 100px;
+    padding: 5% 5%;
+    background-color: #404040F5;
+    color: lightgrey;
+    overflow: visible;
+    
+}
+a{
+    color: lightblue;
+}
+b, h1, h2, h3{
+    color: white;
+}
+h1, h2{
+    text-align: center;
+}
+s
+{
+    color: #D3D3D37F
+}
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.right-image {
+    margin: 10px;
+    border: 5px solid #000000FF;
+    border-radius: 5px;
+    max-width: 50%;
+    float: right;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+q{
+    font-style: italic;
+}

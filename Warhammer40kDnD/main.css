@@ -1,0 +1,77 @@
+body {
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+}
+.content {
+    margin: 2% 10%;
+    margin-bottom: 100px;
+    padding: 5% 5%;
+    background-color: #404040F5;
+    color: lightgrey;
+    overflow: visible;
+    bottom: 0px;
+}
+a{
+    color: lightblue;
+}
+b, h1, h2, h3{
+    color: white;
+}
+h1, h2{
+    text-align: center;
+}
+s
+{
+    color: #D3D3D37F
+}
+.logo {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+}
+.right-image {
+    margin: 10px;
+    border: 5px solid #000000FF;
+    border-radius: 5px;
+    max-width: 50%;
+    float: right;
+}
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+q{
+    font-style: italic;
+}
+.indent10px {
+    margin-left: 10px;
+}
+.indent20px {
+    margin-left: 20px;
+}
+.indent30px {
+    margin-left: 30px;
+}
+.indent40px {
+    margin-left: 40px;
+}
+#backButton{
+    position: fixed;
+    margin: 2% 12%;
+    text-align:center;
+    font-size: 0.6vw;
+    width: 2vw;
+    height: 2vw;
+    opacity: 50%;
+
+    background-color: white;
+    border: 0.125vw solid black;
+    border-radius: 0.5vw;
+}
+#backButton a:link { color: black; text-decoration: none;}
+#backButton a:visited { color: black; text-decoration: none;}
+#backButton a:hover { color: black; text-decoration: none;}
+#backButton a:active { color: black; text-decoration: none;}

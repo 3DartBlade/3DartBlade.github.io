@@ -1,0 +1,41 @@
+<head>
+    <title>WH40k D&D - Meta</title>
+    <link href="../main.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url("./background.png");
+        }
+    </style>
+    <script>
+        var timer = 0;
+        var redirectTime = 10;
+        window.onload = function(){
+            setTimeout(updateCountDown, 1000);
+            console.log("onLoad");
+        }
+        function updateCountDown() {
+            console.log("update");
+            timer++;
+            if (timer < redirectTime) {
+                document.getElementById("countdown").innerHTML = redirectTime - timer;
+                setTimeout(updateCountDown, 1000);
+            }
+            else {
+                redirect();
+            }
+        }
+        function redirect(){
+            window.location.replace("../");
+        }
+    </script>
+</head>
+<body>
+    <div id="backButton"><a href="../"><div>Back to Home Page</div></a></div>
+    <div class="content">
+        <h1>Meta</h1>
+        <p>
+            This folder is purely used for organization, and this page only exists because of nosey people like you ;)<br>
+            You will be redirected to the Home Page in <span id="countdown">10</span>
+        </p>
+    </div>
+</body>

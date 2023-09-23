@@ -2,9 +2,13 @@
   "ExpandedNodes": [
     "",
     "\\aeldari",
+    "\\help",
+    "\\Items",
     "\\mankind",
+    "\\meta",
+    "\\meta\\help",
     "\\tau"
   ],
-  "SelectedNode": "\\tau\\index.html",
+  "SelectedNode": "\\meta\\help\\index.html",
   "PreviewInSolutionExplorer": false
 }

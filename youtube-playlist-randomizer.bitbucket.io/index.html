@@ -1,0 +1,123 @@
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<html> 
+<head> 
+	<title> 
+		Randomize/Shuffle YouTube Playlist of up to 10,000 videos
+	</title>
+
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel = "icon" href = "music-icon.png" type = "image/x-icon"> 
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>    
+	<script>
+		window.jQuery || document.write('<script src="./jquery-3.3.1.min.js"><\/script>');
+	</script>
+	<script src="./lz-string.min.js"></script>
+    <script src="./elasticlunr.min.js"></script>  
+    <script src="./ytplr.min.js"></script> 
+    <script src="./search.min.js"></script> 
+
+    <script>
+        $(document).ready( function() {
+            ytplr_main();
+            search_main();
+        });
+    </script>    
+
+	<style type="text/css">
+    #info { max-width: 550px; }
+    </style>
+</head> 
+
+<body background="background.jpg"> 
+	<div id="video-placeholder"></div>
+	<br> 	
+	<div> 
+		Video Height:
+		<select id="videoSizeSel"> 
+			<option value="360" selected>360</option> 
+			<option value="480">480</option> 
+			<option value="720">720</option> 
+			<option value="1080">1080</option> 
+		</select> 
+
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button id="prev">Prev</button> 
+		&nbsp;&nbsp;
+		<button id="next">Next</button> 
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<button id="bookmark">Bookmark</button> 
+		<input type="checkbox" id="autostart">autostart
+		<br><br> 
+
+		Multi-list <input type="checkbox" id="mlists"> 
+		<br>
+		<span id="id_label"></span> &nbsp;
+		<input type="text" id="pid" name="pid" size="40">
+		<textarea id="pids" rows="3" cols="40" placeholder="Put only one ID on each line. Total length of all lists should not exceed 10K."></textarea>
+		<span id="pidVal"></span>
+		&nbsp;&nbsp;
+		<button id="shuffle">Shuffle</button> 
+		&nbsp;&nbsp;
+        <span id="status"></span>
+
+		<button id="search">Search</button> &nbsp;
+        <br>
+        <div id="search_pan">
+            <br>
+            <hr width="600" align="left">
+            <strong>Input at least 3 chars from the title to search: &nbsp;</strong> 
+            <input type="search" id="search-input"> &nbsp; <span id="count"></span><br>
+            <select id="search-results" size=10></select>
+            <br>
+            <strong>Click a search result to jump to the video</strong>&nbsp;
+            <button id="search-done">Quit Search</button> &nbsp;
+            <hr width="600" align="left">
+        </div>
+
+		<br>
+		<button id="rls">Resume Last Session</button>
+		<button id="sph">Show Playlist History</button>
+
+		<span id="all"></span>
+		<span id="curv"></span>		
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<span id="title"></span>
+		<br> 
+		
+		<select name="video list" id="list" size=10></select>
+
+		<div id="hisLabel"><br><strong>Playlist History:</strong></div>
+		<select name="history" id="plhis" size=10></select>
+	</div>
+
+	<br>
+	<div id="info">
+		<strong>YouTube Playlist Randomizer:</strong> Put in your playlist ID and click Shuffle 
+		button. <strong>Playlist ID</strong> is the part after 
+		<del><strong>www.youtube.com/playlist?list=</strong></del>  
+		in your YouTube playlist URL, don't put the whole URL in.
+		<br><br>
+
+		<strong>When updating your list</strong>, put a different <strong>thumbnail</strong> video for your list. See
+		<a href="QNA.html#:~:text=update through thumbnail video" target="_blank"><strong>Q&A</strong></a>.
+        <br><br>
+
+        <strong>Experimental: Search functionality</strong>
+        After playlist(s) is loaded, click search button to show search panel. Enter any meaningful
+        words from the title (<i>and, or, this, etc would not count</i>) that you are looking for,
+        search starts after 3 characters is typed.
+        <br><br>
+               
+        <strong> Please read <a href="PrivacyPolicy.html" target="_blank"><font size="+1">Privacy Policy</font></a>
+             before using this service. </strong>
+        <br><br>
+
+		<!-- hitwebcounter Code START -->
+		<a href="https://www.hitwebcounter.com" target="_blank">
+		<img src="https://hitwebcounter.com/counter/counter.php?page=7556832&style=0006&nbdigits=9&type=page&initCount=0" title="Web Counter" Alt="counter free" border="0" >
+        </a>
+	</div>	
+                    
+</body> 
+</html>

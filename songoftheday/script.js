@@ -26,7 +26,6 @@ function RandomWithSeed(seed){
 }
 function ScrambleWithSeed(ordered, seed)
 {
-	console.log(ordered);
 var scrambled = [];
 while (ordered.length > 0){
 	seed += 1;
@@ -34,7 +33,6 @@ while (ordered.length > 0){
         scrambled = scrambled.concat(ordered[index]);
         ordered = RemoveAt(ordered, index);
     }
-	console.log(scrambled);
     return scrambled;
 }
 //////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +84,6 @@ async function playRandomVideo() {
 
     var scrambled = ScrambleWithSeed(RangeArray(0, totalVideos-1, 1), 627151);
     var daysSinceEpoch = Math.floor((new Date() - new Date('2024-08-24T00:00:00')) / 8.64e7);
-	console.log(scrambled);
     const videoId = await fetchVideoByIndex(scrambled[daysSinceEpoch]);
     
     if (videoId) {

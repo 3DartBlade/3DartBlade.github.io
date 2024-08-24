@@ -67,9 +67,13 @@ async function fetchVideoByIndex(index) {
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${maxResults}&pageToken=${pageToken}&key=${API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
+	console.log(data);
     const items = data.items;
+	console.log(items);
     const item = items[videoIndexInPage];
+	console.log(item);
     const snippet = item['snippet'];
+	console.log(snippet);
     const resourceId = snippet['resourceId'];
     const videoId = resourceId['videoId'];
     return videoId;

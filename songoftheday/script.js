@@ -7,6 +7,13 @@ const PLAYLIST_ID = 'PLv1zKIp7_nrNp5UmuI-sfFkvEtdYD0dqU';
 const videoPlayer = document.getElementById('video-player');
 const randomVideoButton = document.getElementById('random-video-button');
 
+function RangeArray(start, stop, step){
+ return Array.from(
+    { length: (stop - start) / step + 1 },
+    (value, index) => start + index * step
+    );
+}
+
 async function fetchPlaylistLength() {
     const url = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${PLAYLIST_ID}&key=${API_KEY}`;
     
@@ -42,6 +49,7 @@ async function fetchVideoByIndex(index) {
 
 // Function to play a random video
 async function playRandomVideo() {
+    RangeArray(0, 512, 1);
     var now = new Date();
     const totalVideos = await fetchPlaylistLength();
     if (totalVideos === 0) return;

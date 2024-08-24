@@ -70,6 +70,10 @@ async function fetchVideoByIndex(index) {
 	console.log(data);
     const items = data.items;
 	console.log(items);
+
+	console.log('!!!');
+	console.log(videoIndexInPage);
+	console.log(items.length);
     const item = items[videoIndexInPage];
 	console.log(item);
     const snippet = item['snippet'];

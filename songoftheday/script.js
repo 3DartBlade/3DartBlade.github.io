@@ -7,12 +7,35 @@ const PLAYLIST_ID = 'PLv1zKIp7_nrNp5UmuI-sfFkvEtdYD0dqU';
 const videoPlayer = document.getElementById('video-player');
 const randomVideoButton = document.getElementById('random-video-button');
 
+//////////////////////////////////////////////////////////////////////////////////
+
 function RangeArray(start, stop, step){
- return Array.from(
-    { length: (stop - start) / step + 1 },
-    (value, index) => start + index * step
-    );
+    return Array.from(
+    		  { length: (stop - start) / step + 1 },
+    		  (value, index) => start + index * step);
 }
+function RemoveAt(arr, index){
+ 		 if (index < 0 || index >= arr.length) return arr;
+		  return arr.slice(0, index).concat(arr.slice(index+1));
+}
+function DotProd(a, b){
+		  return a[0] * b[0] + a[1] + b[1];
+}
+function RandomWithSeed(seed){
+    return Math.abs((Math.sin(DotProd([seed, seed/2], [12.9898, 4.1414])) * 43758.5453) % 1);
+}
+function ScrambleWithSeed(ordered, seed)
+{
+		  var scrambled = [];
+		  while (ordered.length > 0){
+				    seed += 1;
+				    var index = Math.floor(RandomWithSeed(seed) * ordered.length);
+        scrambled = scrambled.concat(ordered[index]);
+	  	    ordered = RemoveAt(ordered, index);
+    }
+    return scrambled;
+}
+//////////////////////////////////////////////////////////////////////////////////
 
 async function fetchPlaylistLength() {
     const url = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${PLAYLIST_ID}&key=${API_KEY}`;
@@ -49,34 +72,17 @@ async function fetchVideoByIndex(index) {
 
 // Function to play a random video
 async function playRandomVideo() {
-    console.log(RangeArray(0, 512, 1));
     var now = new Date();
     const totalVideos = await fetchPlaylistLength();
     if (totalVideos === 0) return;
-    
-    const randomIndex = Math.floor(RandomWithSeed(Math.floor(now/8.64e7)) * totalVideos);
-    const videoId = await fetchVideoByIndex(randomIndex);
+
+    var scrambled = ScrambleWithSeed(RangeArray(0, totalvideos-1), 1, 627151);
+    var daysSinceEpoch = Math.floor(new Date() - Date.Parse('2024-08-24T00:00:00') / 8.64e7);
+    const videoId = await fetchVideoByIndex(scrambled[daysSinceEpoch]);
     
     if (videoId) {
         videoPlayer.src = `https://www.youtube.com/embed/${videoId}`;
     }
-}
-function RandomWithSeed(seed){
-    // the initial seed
-    Math.seed = seed;
-
-    // in order to work 'Math.seed' must NOT be undefined,
-    // so in any case, you HAVE to provide a Math.seed
-    Math.seededRandom = function(max, min) {
-        max = max || 1;
-        min = min || 0;
- 
-        Math.seed = (Math.seed * 9301 + 49297) % 233280;
-        var rnd = Math.seed / 233280;
-
-        return min + rnd * (max - min);
-    }
- return Math.seededRandom();
 }
 // Event listener for the button
 //randomVideoButton.addEventListener('click', playRandomVideo);

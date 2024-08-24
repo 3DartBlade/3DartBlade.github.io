@@ -26,12 +26,12 @@ function RandomWithSeed(seed){
 }
 function ScrambleWithSeed(ordered, seed)
 {
-		  var scrambled = [];
-		  while (ordered.length > 0){
-				    seed += 1;
-				    var index = Math.floor(RandomWithSeed(seed) * ordered.length);
+var scrambled = [];
+while (ordered.length > 0){
+	seed += 1;
+	var index = Math.floor(RandomWithSeed(seed) * ordered.length - 1);
         scrambled = scrambled.concat(ordered[index]);
-	  	    ordered = RemoveAt(ordered, index);
+        ordered = RemoveAt(ordered, index);
     }
     return scrambled;
 }
@@ -88,7 +88,7 @@ async function playRandomVideo() {
 
     var scrambled = ScrambleWithSeed(RangeArray(0, totalVideos-1), 1, 627151);
     var daysSinceEpoch = Math.floor((new Date() - new Date('2024-08-24T00:00:00')) / 8.64e7);
-	console.log(scrambled[daysSinceEpoch]);
+	console.log(scrambled);
     const videoId = await fetchVideoByIndex(scrambled[daysSinceEpoch]);
     
     if (videoId) {

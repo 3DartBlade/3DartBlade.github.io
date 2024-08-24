@@ -7,38 +7,55 @@ const PLAYLIST_ID = 'PLv1zKIp7_nrNp5UmuI-sfFkvEtdYD0dqU';
 const videoPlayer = document.getElementById('video-player');
 const randomVideoButton = document.getElementById('random-video-button');
 
-// Function to fetch videos from the playlist
-async function fetchPlaylistVideos() {
-    let videos = [];
-    let nextPageToken = '';
-    const maxResults = 50;
-
-    do {
-        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${maxResults}&pageToken=${nextPageToken}&key=${API_KEY}`;
-        
-        try {
-            const response = await fetch(url);
-            const data = await response.json();
-            videos = videos.concat(data.items);
-            nextPageToken = data.nextPageToken || ''; // If nextPageToken is undefined, stop fetching
-        } catch (error) {
-            console.error('Failed to fetch playlist:', error);
-            break;
-        }
-    } while (nextPageToken); // Continue fetching as long as there is a nextPageToken
-
-    return videos;
+async function fetchPlaylistLength() {
+    const url = `https://www.googleapis.com/youtube/v3/playlists?part=contentDetails&id=${PLAYLIST_ID}&key=${API_KEY}`;
+    
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.items[0].contentDetails.itemCount; // The total number of videos in the playlist
+    } catch (error) {
+        console.error('Failed to fetch playlist length:', error);
+        return 0;
+    }
 }
 
-// Function to pick a random video and update the iframe
-function playRandomVideo(videos) {
+// Function to fetch a specific video by its index
+async function fetchVideoByIndex(index) {
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=1&pageToken=${calculatePageToken(index)}&key=${API_KEY}`;
+    
+    try {
+        const response = await fetch(url);
+        const data = await response.json();
+        return data.items[0].snippet.resourceId.videoId;
+    } catch (error) {
+        console.error('Failed to fetch video by index:', error);
+        return null;
+    }
+}
+
+// Function to calculate the appropriate page token
+function calculatePageToken(index) {
+    // The API doesn't provide a direct way to get a specific index; you'd need to iterate through pages.
+    // As an alternative, you could request 50 items at a time and use the index to find the correct item.
+
+    const maxResults = 50;
+    const page = Math.floor(index / maxResults);
+    return page > 0 ? `&pageToken=${page}` : '';
+}
+
+// Function to play a random video
+async function playRandomVideo() {
     var now = new Date();
-    if (videos.length === 0) return;
-
-    const randomIndex = Math.floor(RandomWithSeed(Math.floor(now/8.64e7)) * videos.length);
-    const videoId = videos[randomIndex].snippet.resourceId.videoId;
-
-    videoPlayer.src = `https://www.youtube.com/embed/${videoId}`;
+    const totalVideos = await fetchPlaylistLength();
+    if (totalVideos === 0) return;
+    
+    const randomIndex = Math.floor(RandomWithSeed(Math.floor(now/8.64e7)) * totalVideos);
+    const videoId = await fetchVideoByIndex(randomIndex);
+    
+    if (videoId) {
+        videoPlayer.src = `https://www.youtube.com/embed/${videoId}`;
+    }
 }
 function RandomWithSeed(seed){
     // the initial seed
@@ -58,7 +75,4 @@ function RandomWithSeed(seed){
  return Math.seededRandom();
 }
 // Event listener for the button
-randomVideoButton.addEventListener('click', async () => {
-    const videos = await fetchPlaylistVideos();
-    playRandomVideo(videos);
-});
+randomVideoButton.addEventListener('click', playRandomVideo);

@@ -84,7 +84,7 @@ async function playRandomVideo() {
     const totalVideos = await fetchPlaylistLength();
     if (totalVideos === 0) return;
 
-    var scrambled = ScrambleWithSeed(RangeArray(0, totalVideos-1), 1, 627151);
+    var scrambled = ScrambleWithSeed(RangeArray(0, totalVideos-1, 1), 627151);
     var daysSinceEpoch = Math.floor((new Date() - new Date('2024-08-24T00:00:00')) / 8.64e7);
 	console.log(scrambled);
     const videoId = await fetchVideoByIndex(scrambled[daysSinceEpoch]);

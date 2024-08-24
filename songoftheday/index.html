@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Song of The Day</title>
-</head>
-<body onload="playRandomVideo()">
- <h1> Today's song is:</h1>
-    <p>(give it a second)</p>
-    <div id="video-container">
-        <iframe id="video-player" width="560" height="315" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <script src="script.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Song of The Day</title>
+        <link rel="stylesheet" href="style.css">
+        <script src="script.js"></script>
+    </head>
+    <body onload="playRandomVideo()">
+        <div class="center">
+            <h1> Today's song is:</h1>
+            <p>(give it a second)</p>
+            <div id="video-container">
+                <iframe id="video-player" width="560" height="315" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </body>
 </html>

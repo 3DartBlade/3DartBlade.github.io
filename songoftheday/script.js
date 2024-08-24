@@ -70,10 +70,6 @@ async function fetchVideoByIndex(index) {
 	console.log(data);
     const items = data.items;
 	console.log(items);
-
-	console.log('!!!');
-	console.log(videoIndexInPage);
-	console.log(items.length);
     const item = items[videoIndexInPage];
 	console.log(item);
     const snippet = item['snippet'];
@@ -92,6 +88,7 @@ async function playRandomVideo() {
 
     var scrambled = ScrambleWithSeed(RangeArray(0, totalVideos-1), 1, 627151);
     var daysSinceEpoch = Math.floor((new Date() - new Date('2024-08-24T00:00:00')) / 8.64e7);
+	console.log(daysSinceEpoch);
     const videoId = await fetchVideoByIndex(scrambled[daysSinceEpoch]);
     
     if (videoId) {

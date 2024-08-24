@@ -71,4 +71,4 @@ function RandomWithSeed(seed){
  return Math.seededRandom();
 }
 // Event listener for the button
-randomVideoButton.addEventListener('click', playRandomVideo);
+//randomVideoButton.addEventListener('click', playRandomVideo);

@@ -30,7 +30,7 @@ function ScrambleWithSeed(ordered, seed)
 var scrambled = [];
 while (ordered.length > 0){
 	seed += 1;
-	var index = Math.floor(RandomWithSeed(seed) * ordered.length - 1);
+	var index = Math.floor(RandomWithSeed(seed) * (ordered.length - 1));
         scrambled = scrambled.concat(ordered[index]);
         ordered = RemoveAt(ordered, index);
     }

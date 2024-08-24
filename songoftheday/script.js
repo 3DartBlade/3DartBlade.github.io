@@ -67,7 +67,7 @@ async function fetchVideoByIndex(index) {
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${maxResults}&pageToken=${pageToken}&key=${API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
-    return data.items[videoIndexInPage].snippet.resourceId.videoId;
+    return data.items[index % maxResults].snippet.resourceId.videoId;
 }
 
 // Function to play a random video

@@ -1,5 +1,7 @@
 .center{
   background-color: #00000080;
   text-align:center;
-  margin:auto;
+  margin:10%;
+  padding:5%;
+  border-radius: 15px;
 }

@@ -49,7 +49,7 @@ async function fetchVideoByIndex(index) {
 
 // Function to play a random video
 async function playRandomVideo() {
-    RangeArray(0, 512, 1);
+    console.log(RangeArray(0, 512, 1));
     var now = new Date();
     const totalVideos = await fetchPlaylistLength();
     if (totalVideos === 0) return;

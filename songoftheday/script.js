@@ -26,6 +26,7 @@ function RandomWithSeed(seed){
 }
 function ScrambleWithSeed(ordered, seed)
 {
+	console.log(ordered);
 var scrambled = [];
 while (ordered.length > 0){
 	seed += 1;

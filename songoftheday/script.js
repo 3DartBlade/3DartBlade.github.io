@@ -69,10 +69,11 @@ async function fetchVideoByIndex(index) {
     const data = await response.json();
     const items = data.items;
     const item = items[videoIndexInPage];
-    //const snippet = item.snippet;
-    //const resourceId = snippet.resourceId;
-    //const videoId = resourceId.videoId;
-    return data.items[index % maxResults]['snippet']['resourceId']['videoId'];
+    const snippet = item['snippet'];
+    const resourceId = snippet['resourceId'];
+    const videoId = resourceId['videoId'];
+    return videoId;
+    //return data.items[index % maxResults]['snippet']['resourceId']['videoId'];
 }
 
 // Function to play a random video

@@ -70,6 +70,7 @@ async function fetchVideoByIndex(index) {
     const items = data.items;
     const item = items[videoIndexInPage];
     const snippet = item['snippet'];
+	document.getElementById("para").innerHTML = snippet["title"]; 
     const resourceId = snippet['resourceId'];
     const videoId = resourceId['videoId'];
     return videoId;

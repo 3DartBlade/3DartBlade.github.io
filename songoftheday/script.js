@@ -101,5 +101,5 @@ async function playRandomVideo() {
 }
 // Event listener for the button
 //randomVideoButton.addEventListener('click', playRandomVideo);
-videoPlayer.style.width = videoPlayer.style.height * 1.7777;
+videoPlayer.style.height = videoPlayer.style.width * 0.5625;
 playRandomVideo();

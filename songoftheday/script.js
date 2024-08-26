@@ -51,6 +51,7 @@ async function fetchPlaylistLength() {
 }
 // Function to fetch a specific video by its index
 async function fetchVideoByIndex(list) {
+	document.getElementById("para").innerHTML = "Fetching videos. Hold on!"; 
 	var daysSinceEpoch = Math.floor((new Date() - new Date('2024-08-24T00:00:00')) / 8.64e7);
     const maxResults = 50;
     const page = Math.floor(list.length / maxResults);
@@ -62,36 +63,27 @@ async function fetchVideoByIndex(list) {
         const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${maxResults}&pageToken=${pageToken}&key=${API_KEY}`;
         const response = await fetch(url);
         const data = await response.json();
-	    vids.concat(data.items);
+	    vids = vids.concat(data.items);
         pageToken = data.nextPageToken;
     }
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${maxResults}&pageToken=${pageToken}&key=${API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
     const items = data.items;
-	vids.concat(items);
-
-	for (var i = 0; i < vids.length; i++)
+	vids = vids.concat(items);
+    var unavailableVids = 0;
+	for (var i = 0; i <= daysSinceEpoch + unavailableVids; i++)
 	{
-		console.log(vids[i].title);
-		if (snippet['title'] == 'Private video' || snippet['title'] == 'Deleted video')
-			console.log('!!!!!!!!!!');
+		if (vids[list[i]].snippet.title == 'Private video' || vids[list[i]].snippet.title == "Deleted video")
+			unavailableVids++;
 	}
-	return;
-    const item = items[videoIndexInPage];
-    const snippet = item['snippet'];
-	if (snippet['title'] == 'Private video' || snippet['title'] == 'Deleted video')
-	{
-		// make wayback button
-		// make skip button
-		document.getElementById("para").innerHTML = snippet['title'] + "<br>Index in playlist: " + index + "<br>URL: https://www.youtube.com/watch?v=" + snippet['resourceId']['videoId'];
-	}
-	else
-		document.getElementById("para").innerHTML = snippet["title"]; 
-    const resourceId = snippet['resourceId'];
-    const videoId = resourceId['videoId'];
-    return videoId;
-    //return data.items[index % maxResults]['snippet']['resourceId']['videoId'];
+		const item = vids[list[daysSinceEpoch + unavailableVids]];
+    	const snippet = item['snippet'];
+		document.getElementById("para").innerHTML = snippet["title"] + "<br>" + unavailableVids + " videos were unavailable and skipped"; 
+		const resourceId = snippet['resourceId'];
+		const videoId = resourceId['videoId'];
+		return videoId;
+		//return data.items[index % maxResults]['snippet']['resourceId']['videoId'];
 }
 
 // Function to play a random video
@@ -109,3 +101,4 @@ async function playRandomVideo() {
 }
 // Event listener for the button
 //randomVideoButton.addEventListener('click', playRandomVideo);
+playRandomVideo();

@@ -16,6 +16,6 @@ body{
   background-color: #ffe6a7;
 }
 #video-player{
-  width: 50%;
-  height: 50%;
+  width: 50vw;
+  height: calc(50vw * 0.5625);
 }

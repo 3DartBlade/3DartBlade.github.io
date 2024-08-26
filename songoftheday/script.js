@@ -70,7 +70,13 @@ async function fetchVideoByIndex(index) {
     const items = data.items;
     const item = items[videoIndexInPage];
     const snippet = item['snippet'];
-	document.getElementById("para").innerHTML = snippet["title"] + '<br>(https://www.youtube.com/watch?v=' + snippet['resourceId']['videoId'] + ')'; 
+	if (snippet['title'] == 'Private video' || snippet['title'] == 'Deleted video')
+	{
+		// make wayback button
+		// make skip button
+		document.getElementById("para").innerHTML = snippet['title'] + "<br>Index in playlist: " + index + "<br>URL: https://www.youtube.com/watch?v=" + snippet['resourceId']['videoId'];
+	}
+	document.getElementById("para").innerHTML = snippet["title"]; 
     const resourceId = snippet['resourceId'];
     const videoId = resourceId['videoId'];
     return videoId;

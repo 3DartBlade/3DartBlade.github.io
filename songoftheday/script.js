@@ -79,7 +79,7 @@ async function fetchVideoByIndex(list) {
 	}
 		const item = vids[list[daysSinceEpoch + unavailableVids]];
     	const snippet = item['snippet'];
-		document.getElementById("para").innerHTML = "<h3>" + snippet["title"] + "</h3><br><h4>"+snippet.videoOwnerChannelTitle+"</h4><br>(" + unavailableVids + " videos were unavailable and skipped)"; 
+		document.getElementById("para").innerHTML = "<h2>" + snippet["title"] + "</h2><br><h4>"+snippet.videoOwnerChannelTitle+"</h4><br>(" + unavailableVids + " videos were unavailable and skipped)"; 
 		const resourceId = snippet['resourceId'];
 		const videoId = resourceId['videoId'];
 		return videoId;

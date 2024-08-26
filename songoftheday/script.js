@@ -71,7 +71,7 @@ async function fetchVideoByIndex(list) {
     const items = data.items;
 	vids.concat(items);
 
-	for (int i = 0; i < vids.length; i++)
+	for (var i = 0; i < vids.length; i++)
 	{
 		console.log(vids[i].title);
 		if (snippet['title'] == 'Private video' || snippet['title'] == 'Deleted video')

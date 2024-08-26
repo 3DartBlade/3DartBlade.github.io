@@ -49,25 +49,35 @@ async function fetchPlaylistLength() {
         return 0;
     }
 }
-
 // Function to fetch a specific video by its index
-async function fetchVideoByIndex(index) {
+async function fetchVideoByIndex(list) {
+	var daysSinceEpoch = Math.floor((new Date() - new Date('2024-08-24T00:00:00')) / 8.64e7);
     const maxResults = 50;
-    const page = Math.floor(index / maxResults);
-    const videoIndexInPage = index % maxResults;
+    const page = Math.floor(list.length / maxResults);
+    const videoIndexInPage = list.length % maxResults;
 
+	var vids = [];
     let pageToken = '';
     for (let i = 0; i < page; i++) {
         const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${maxResults}&pageToken=${pageToken}&key=${API_KEY}`;
         const response = await fetch(url);
         const data = await response.json();
+	    vids.concat(data.items);
         pageToken = data.nextPageToken;
     }
-
     const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&playlistId=${PLAYLIST_ID}&maxResults=${maxResults}&pageToken=${pageToken}&key=${API_KEY}`;
     const response = await fetch(url);
     const data = await response.json();
     const items = data.items;
+	vids.concat(items);
+
+	for (int i = 0; i < vids.length; i++)
+	{
+		console.log(vids[i].title);
+		if (snippet['title'] == 'Private video' || snippet['title'] == 'Deleted video')
+			console.log('!!!!!!!!!!');
+	}
+	return;
     const item = items[videoIndexInPage];
     const snippet = item['snippet'];
 	if (snippet['title'] == 'Private video' || snippet['title'] == 'Deleted video')
@@ -91,8 +101,7 @@ async function playRandomVideo() {
     if (totalVideos === 0) return;
 
     var scrambled = ScrambleWithSeed(RangeArray(0, totalVideos-1, 1), 627151);
-    var daysSinceEpoch = Math.floor((new Date() - new Date('2024-08-24T00:00:00')) / 8.64e7);
-    const videoId = await fetchVideoByIndex(scrambled[daysSinceEpoch]);
+    const videoId = await fetchVideoByIndex(scrambled);
     
     if (videoId) {
         videoPlayer.src = `https://www.youtube.com/embed/${videoId}`;

@@ -1,0 +1,27 @@
+Sci-Fi card game
+You have basic currency and you have 'fragments'. 
+
+Lore (world building):
+Fragments are-... fragments... of a supermassive AI developed by the military, named "Moma", which was deemed too dangerous and was destroyed after the military suffered a data breach. However, not before hackers all over the world started breaking in and downloading it. Now the fragments are scattered all over the world. They've been sold on 'zero day markets' and such. The fragments have a unique copy protection that effectively makes it impossible to copy it without destroying the original, thus moving it. This means every fragment is unique and cannot be duplicated.
+Fragments affect gameplay. Fragments are finite and you can have all of them meaning you can't collect more. Moma only requires (tbd)% of its fragments to be rebuilt as the rest can be 'guessed'. This means there are more fragments than the price of "Moma assembler" in the dark shop. 
+
+Bosses:
+The more fragments you have, the higher the chance of a boss appearing and the higher level they'll be. Bosses bet with fragments, meaning you can win more or lose yours. The higher level the boss, the more they cheat. You may refuse to fight a boss at the moment, but the game gets harder anyway, and without spending fragments, it's gonna become harder and harder to win. If you don't have fragments, a boss may appear who offers to bet with a fragment for money. 
+
+Shops:
+After, or even during a match, you have the ability to buy items that help you from the shop for basic currency, or you can visit the underground, dark web shop where you can spend fragments, or even straight up sell them for money (basic currency). You may go into debt for any reason. 
+An item named "Moma assembler" can be bought from the dark shop for (tbd)% of all fragments that trivializes the gameplay, but it locks you into an ending. The more fragments you have, the more you can sell them for, as they become 'rare'. 
+
+Story (presented to player):
+The goal of the game is simply to amass enough money to pay off your daughter's debt. During the game, the player is given small hints that pursuing fragments is dangerous. The more fragments you have, the higher the chance that someone will offer to pay you a lot of money for all of your fragments. The more fragments you have, the higher the chance of assassination attempts against you. Above a certain number of fragments, the military will start triangulating your position based on your hard drive's unique ID. 
+
+Meta gameplay:
+You may attempt to attack your opponent at any time, but there's a security system up-and-running that stops and penalises any ongoing crimes, including but not limited to assault. During gameplay however, there's a possibility of a power outage that lets either of you do anything from obvious cheats to murder attempts. You can buy battery packs, armor, better weapons, corpse disposal etc. from the shops that allow you to avoid, stop, survive or commit crimes. Having Moma guarantees safety under any and all circumstances.
+At any point during gameplay, you may trash your hard drive, which permanently destroys your fragments, unless uploaded to a 'cloud-bank'. This has to be done periodically above a certain fragment count to avoid being raided by the military. 
+Beyond your physical well being, you have to worry about your cyber-security as well. Hackers may try to break into your cloud-bank to steal your fragments or to steal your money and ask for your fragments in exchange for it.
+You can upload or download money to/from your cloud-bank. Online shopping requires your money to be online but some, well paying, challengers will only accept 'cash'. Both up- and downloading has a hefty "handling fee" so you want to avoid up- or downloading small amounts frequently. Items can be bought to increase your security, such as your cloud-bank's premium membership that increases your security (straight up lower the chances of an attack being successful) but your handling fee increases drastically in addition to an initial payment. You may unsubscribe from the membership free of charge, but it's incredibly complicated, annoying and time consuming.
+Other ways of increasing you cyber-security include decoy accounts (a random one will be attacked), keygen login (accessing the account requires a key generated specifically on your device), VPN (your ip becomes randomised, making accessing the real one difficult), counter-strike (when hacked, there's a chance you will be able to initiate a counter hack, taking back your goods and maybe some more money too), fragmentation (store your data on several independent servers, making stealing all of it at once impossible) etc.
+
+MC Personal Information:
+Name: Thomas Bradley Dawson / Tiffany Blair Dawson / Temple Bee Dawson
+Card info: 0198-2376-6732-8910; 03/82; 314

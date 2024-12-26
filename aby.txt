@@ -25,3 +25,166 @@ Other ways of increasing you cyber-security include decoy accounts (a random one
 MC Personal Information:
 Name: Thomas Bradley Dawson / Tiffany Blair Dawson / Temple Bee Dawson
 Card info: 0198-2376-6732-8910; 03/82; 314
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Card types:
+
+# Structure
+Cards that describe an unmovable structure that usually gives passive bonuses.
+- Occupies grid (size specified)
+- Cannot be stacked
+- Has Def. but no Atk.
+- Becomes destroyed if any part is destroyed
+- Costs Res.
+
+# Unit
+Cards that describes units that usually can be moved and attack the enemy.
+- Occupies grid (1x1)
+- Can be stacked
+- Has Atk. but no Def.
+- Costs Res.
+- Can be used to initiate attack
+
+# Action
+Cards that describe a special action to be done immediately.
+- Costs Res.
+- Cannot be placed, only used
+
+# Effect
+Cards that describe a passive effect or a conditional one.
+- Costs Res.
+- Doesn't occupy grid space, but occupies an effect space instead
+- Applies a constant, passive effect or does something special if a condition is fulfilled.
+
+-----------------------------------------
+
+# General rules:
+
+"Unless stated otherwise" applies to all rules. Card descriptions always overwrite rules.
+# Playing field
+The playing field consists of an [[8x8 (gridsize)]] grid and [[5 (effectfield)]] effect fields per player. [[Card types#Structures|Structure]] and [[Card types#Unit|Unit]] cards may be deployed on the grid while [[Card types#Effect|Effect]] cards occupy an effect field.
+[[Card types#Unit|Unit]] cards may occupy the same space as [[Card types#Structures|Structure]] cards. In that case, the [[Card types#Structures|Structure]] card gets destroyed first in case of an attack.
+
+# Win conditions
+(only one condition needs to be met)
+- Each player has [[3 (playerhealth)]] health points that can be attacked by enemy [[Card types#Unit|Unit]] cards if no [[Card types#Structures|Structure]] or [[Card types#Unit|Unit]] cards are deployed. If a player's health reaches 0, they lose.
+- The game has a chess clock that limits the total time a player can use to make decisions per game. If this timer runs out, the player loses.
+- A player might forfeit the game, allowing the opponent to win. (This may be done in exchange for lessened losses if bets are present. Often referred to as a 'peace treaty')
+
+# Resource
+Often referred to as Res. [[5 (baseresgen)]] resource is generated at the start of each round that can be spent on deploying cards. Each card has a Res cost.
+
+# Attacking
+[[Card types#Unit|Unit]] cards may attack enemy [[Card types#Structures|Structure]] or [[Card types#Unit|Unit]] cards or enemy health if neither are present. If an attack is successful, the attacked card gets destroyed or the enemy loses a health point. To determine if an attack is successful, a [[6 (diesize)]] sided die must be rolled, the cell's combined Atk value added and the attacked cell's combined Def value subtracted. If the resulting value is greater than [[6 (diesize)]] / 2, the attack is successful. An attack may only be initiated if the attacker is in a non-diagonal neighbouring cell. A direct attack may only be initiated if the attacker is in the furthest row (closest to enemy).
+
+# Movement
+[[Card types#Unit|Unit]] cards may move instead of attacking. They may move 1 cell in any non-diagonal direction.
+
+# Stacking
+Stacking refers to the action of deploying multiple [[Card types#Unit|Unit]] cards on the same cell. Their combined Stk value must not exceed [[10 (basemaxstack)]] otherwise the deployment/movement cannot be done. Stacked cards may move as one or separately, but they must attack as one. If you want to move some but attack with others, you must move first.
+
+# Effects
+Effect cards are applied from left to right at the time specified on the card (i.e.: start of each round, on attack, etc.). **Effect cards cannot be reordered unless both are "Versatile" or empty!** Each effect field may only hold one effect card. Effect cards may only be discarded at will if they are "Versatile".
+
+# Tags
+Cards may have tags such as "Electronic", "Aerial", etc. Some cards may use these tags as a condition to their effects. (i.e.: All "Electronic" Unit cards have 1 more Atk)
+
+# Variables
+Cards may use constant values such as 1, 2 or 7250 or they may refer to values that can change during gameplay, such as "Cards deployed"(Refers to the entire grid), "Remaining Stk"(Applies to the cell the unit/structure is deployed on), "Time left in seconds"(Refers to the player's timer) or even "Current month"(Refers to real-life time)
+
+# Graveyard
+Cards that have been destroyed or discarded are sent to the graveyard. The graveyard is shared between players.
+
+--------------------------------------------------------------------
+
+# Cards:
+
+# Normal pack
+## Structure
+
+Name: Factory
+Description: A factory that makes canned goods. Get 1 more Res at the start of each round.
+Cost: 5
+Type: Structure
+Size: 1x1
+Tags: Civilian
+Def: 1
+
+---
+Name: Fortress
+Description: A fortress made to house soldiers. Increase affected cells' max Stk by 5.
+Cost: 5
+Type: Structure
+Size: 1x1
+Tags: Military
+Def: 3
+## Unit
+
+Name: Troop
+Description: Somebody's son, a disposable soldier.
+Cost: 1
+Type: Unit
+Stk: 1
+Tags: Military, Human
+Atk: 1
+
+---
+Name: Tank
+Description: A mobile, armored weapon.
+Cost: 2
+Type: Unit
+Stk: 2
+Tags: Military, Mechanized
+Atk: 2
+
+---
+Name: Mech
+Description: A huge bipedal robot of destruction.
+Cost: 3
+Type: Unit
+Stk: 3
+Tags: Military, Electronic
+Atk: 3
+## Action
+
+Name: Bomb
+Description: A bomb that can be dropped by a plane. Wipes everything from a chosen cell.
+Cost: 5
+Type: Action
+Tags: Aerial
+## Effect
+
+Name: Home front
+Description: Increase Atk of all Units occupying your own cells by 1.
+Cost: 2
+Type: Effect
+Tags: Versatile
+
+---
+Name: Aerial Defense System
+Description: Neutralizes the next "Aerial" card's attack or action. Gets discarded in the process.
+Cost: 2
+Type: Effect
+Tags:
+
+# Butcher pack
+
+## Effect
+
+Name: Can't pull the trigger
+Description: Decrease enemy's Atk by the amount of fingers they are missing.
+Cost: 1
+Type: Effect
+Tags:
+
+# Arcane pack
+
+## Action
+
+Name: Necromancy
+Description: Shuffle the graveyard and draw 2 cards from it
+Cost: 2
+Type: Action
+Tags: 

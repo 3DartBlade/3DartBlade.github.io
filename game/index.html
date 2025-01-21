@@ -6,9 +6,26 @@
     <link href="index.css" rel="stylesheet" />
   
     <script>
+      var aidint = 1;
+      var aidbool = false;
+      var aidfloat = 0.1;
+      var aidstring = "aid";
+      function saveFile(){
+        let saveObj = {aidint, aidbool, aidfloat, aidstring};
+        var saveString = JSON.stringify(saveObj);
+        var uri = "data:text/json;charset=utf-8," + encodeURIComponent(saveString);
+        
+        var tempLink = document.createElement('a');
+        tempLink.innerHTML = "aids";
+        tempLink.setAttribute("href", uri);
+        tempLink.setAttribute("download", "save.json");
+        document.body.appendChild(tempLink);
+        tempLink.click();
+        tempLink.remove();
+      }
     </script>
   </head>
   <body>
-    <a href="data:,ff" download="fayl.ext">test icle</a>
+    
   </body>
 </html>

@@ -25,21 +25,14 @@
       }
 
       function readFile(file){
-        try {
-          alert(file.value);
-          fetch(file.value)
-            .then((res) => res.json())
-            .then((text) => {
-              alert(text);
-            }
-          )
-          .catch((e) => alert("Error: " + e));
-          return;
-          let saveObj = JSON.parse(file.value);
-          alert(saveObj.aidint);
-        } catch (e) {
-          alert("Error: " + e);
-        }
+        alert(file.value);
+        fetch(file.value)
+          .then((res) => res.json())
+          .then((text) => {
+            alert(text);
+          }
+        )
+        .catch((e) => alert("Error: " + e));
       }
     </script>
   </head>

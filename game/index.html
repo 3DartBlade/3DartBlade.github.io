@@ -8,10 +8,13 @@
     <script src="index.js"></script>
   </head>
   <body>
-    <p>Version: 0.7</p><br>
-    <button onClick="Save()">Save</button> <input type="file" name="file" id="file" value="" onchange="Load(this)"/><br>
-    <br>
-    <p id="clickCount">0</p> <button onclick="IncreaseClick()">Click me</button><br>
+    <div class="topbar">
+      <span>Version: 0.7</span>
+      <span><button onClick="Save()">Save</button> <label for="file">Load...</label><input type="file" name="file" id="file" value="" onchange="Load(this)"/></span>
+      <span>placeholder</span>
+    </div>
+    <button id="clickButton" onclick="IncreaseClick()">Click me</button>
+
 
 
     <script>Ready()</script>

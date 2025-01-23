@@ -1,0 +1,32 @@
+body{
+    background-color: #292110;
+    color: #d8d8d8;
+    padding: 0;
+    margin: 0;
+}
+.topbar{
+    padding: 0.75%;
+    box-sizing: border-box;
+    display: flex;
+    width: 100%;
+    font-size: 100%;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.33);
+}
+
+#clickButton{
+    position: fixed;
+    color: #d8d8d8;
+    border: none;
+    font-size: 200%;
+    padding: 5%;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    border-radius: 30%;
+    background-color: rgba(0, 0, 0, 0.33);
+}
+#clickArea{
+
+}

@@ -4,7 +4,7 @@ var clicks = 0;
 let clickObject;
 
 function Ready(){
-    clickObject = document.getElementById("clickCount");
+    clickObject = document.getElementById("clickButton");
     onbeforeunload = BeforeUnload;
 
     LoadLocal();

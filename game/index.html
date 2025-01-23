@@ -23,36 +23,21 @@
         tempLink.click();
         tempLink.remove();
       }
-      function callbackTest(event){
-        alert(event.target.result);
+      function loadSave(event){
+        var str = event.target.result;
+        var saveObject = JSON.parse(str);
+
+        alert(saveObject.aidint);
       }
       function readFile(file){
-        //alert(file.value);
-        //alert(file.files);
-        //alert(file.files[0]);
         let reader = new FileReader();
-        //reader.readAsText(file.value);
-        //reader.addEventListener("loadend", callbackTest);
         reader.onload = callbackTest;
         reader.readAsText(file.files[0]);
-        
-        
-        //fetch(file)
-          //.then(x => x.text())
-          //.then(y => alert(y));
-        //return;
-        //fetch(file.value)
-          //.then((res) => res.json())
-          //.then((text) => {
-            //alert(text);
-          //}
-        //)
-        //.catch((e) => alert("Error: " + e));
       }
     </script>
   </head>
   <body>
-    <p>Version: 0.5</p><br>
+    <p>Version: 0.6</p><br>
     <button onClick="saveFile()">save</button>
     <input type="file" name="file" id="file" value="" onchange="readFile(this)"/>
   </body>

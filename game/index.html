@@ -23,14 +23,18 @@
         tempLink.click();
         tempLink.remove();
       }
-
+      function callbackTest(){
+        alert("Did somebody call Back?");
+      }
       function readFile(file){
         //alert(file.value);
         //alert(file.files);
         //alert(file.files[0]);
         let reader = new FileReader();
         //reader.readAsText(file.value);
-        alert(reader.readAsText(file.files[0]));
+        reader.loadend = callbackTest;
+        reader.readAsText(file.files[0]);
+        
         
         //fetch(file)
           //.then(x => x.text())

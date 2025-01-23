@@ -5,40 +5,16 @@
     <title>Game</title>
     <link href="index.css" rel="stylesheet" />
   
-    <script>
-      var aidint = 1;
-      var aidbool = false;
-      var aidfloat = 0.1;
-      var aidstring = "aid";
-      function saveFile(){
-        let saveObj = {aidint, aidbool, aidfloat, aidstring};
-        var saveString = JSON.stringify(saveObj);
-        var uri = "data:text/json;charset=utf-8," + encodeURIComponent(saveString);
-        
-        var tempLink = document.createElement('a');
-        tempLink.innerHTML = "aids";
-        tempLink.setAttribute("href", uri);
-        tempLink.setAttribute("download", "save.json");
-        document.body.appendChild(tempLink);
-        tempLink.click();
-        tempLink.remove();
-      }
-      function loadSave(event){
-        var str = event.target.result;
-        var saveObject = JSON.parse(str);
-
-        alert(saveObject.aidint);
-      }
-      function readFile(file){
-        let reader = new FileReader();
-        reader.onload = loadSave;
-        reader.readAsText(file.files[0]);
-      }
-    </script>
+    <script src="index.js"></script>
   </head>
   <body>
-    <p>Version: 0.6.1</p><br>
-    <button onClick="saveFile()">save</button>
-    <input type="file" name="file" id="file" value="" onchange="readFile(this)"/>
+    <p>Version: 0.7</p><br>
+    <button onClick="Save()">Save</button>
+    <input type="file" name="file" id="file" value="" onchange="Load(this)"/><br>
+    <br>
+    <p id="clickCount">0</p> <button onclick="IncreaseClick()">Click me</button>
+
+
+    <script>Ready()</script>
   </body>
 </html>

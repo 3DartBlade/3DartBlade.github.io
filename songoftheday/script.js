@@ -77,7 +77,7 @@ async function fetchVideoByIndex(list) {
 		if (vids[list[i]].snippet.title == 'Private video' || vids[list[i]].snippet.title == "Deleted video")
 			unavailableVids++;
 	}
-		const item = vids[list[daysSinceEpoch + unavailableVids]];
+		const item = vids[list[(daysSinceEpoch + unavailableVids) % list.length]];
     	const snippet = item['snippet'];
 		document.getElementById("para").innerHTML = "<h2>" + snippet["title"] + "</h2>\n<h4>"+snippet.videoOwnerChannelTitle+"</h4>\n(" + unavailableVids + " videos were unavailable and skipped)"; 
 		const resourceId = snippet['resourceId'];

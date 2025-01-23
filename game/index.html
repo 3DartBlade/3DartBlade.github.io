@@ -32,21 +32,22 @@
         //reader.readAsText(file.value);
         alert(reader.readAsText(file.files[0]));
         
-        fetch(file)
-          .then(x => x.text())
-          .then(y => alert(y));
-        return;
-        fetch(file.value)
-          .then((res) => res.json())
-          .then((text) => {
-            alert(text);
-          }
-        )
-        .catch((e) => alert("Error: " + e));
+        //fetch(file)
+          //.then(x => x.text())
+          //.then(y => alert(y));
+        //return;
+        //fetch(file.value)
+          //.then((res) => res.json())
+          //.then((text) => {
+            //alert(text);
+          //}
+        //)
+        //.catch((e) => alert("Error: " + e));
       }
     </script>
   </head>
   <body>
+    <p>Version: 0.1</p><br>
     <button onClick="saveFile()">save</button>
     <input type="file" name="file" id="file" value="" onchange="readFile(this)"/>
   </body>

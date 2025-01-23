@@ -1,5 +1,8 @@
 const version = "0.7.0";
 var clicks = 0;
+var lastclick;
+
+var clickCooldown = 10000;
 
 let clickObject;
 
@@ -7,7 +10,7 @@ function Ready(){
     clickObject = document.getElementById("clickButton");
     onbeforeunload = BeforeUnload;
     document.addEventListener("visibilitychange", BeforeUnload);
-
+    StartCooldown();
 
 
     LoadLocal();
@@ -72,6 +75,23 @@ function UpdateDisplay(){
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 function IncreaseClick(){
-    clicks += 1;
-    UpdateDisplay();
+    if ((Date.now() - lastclick.valueOf()) >= clickCooldown)
+    {
+        clicks += 1;
+        UpdateDisplay();
+        StartCooldown();
+    }
+}
+function StartCooldown()
+{
+    lastclick = Date.now();
+    clickObject.classList.remove("pbar-inactive");
+    clickObject.classList.add("pbar-active");
+    document.querySelector(':root').style.setProperty('--timeout-milisec', clickCooldown);
+    setTimeout(DeactivatePbar, clickCooldown);
+}
+function DeactivatePbar()
+{
+    clickObject.classList.add("pbar-inactive");
+    clickObject.classList.remove("pbar-active");
 }

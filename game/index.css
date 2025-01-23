@@ -13,7 +13,6 @@ body{
     justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.33);
 }
-
 .custom-file-upload {
     border: none;
     color: white;
@@ -36,7 +35,7 @@ button {
 
 #clickButton{
     touch-action: manipulation;
-    position: fixed;
+    position: absolute;
     color: #d8d8d8;
     border: none;
     font-size: 500%;
@@ -44,10 +43,30 @@ button {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
+    background-color: var(--pbar-background);
     border-radius: 30%;
-    background-color: rgba(0, 0, 0, 0.33);
 }
-#clickArea{
 
+:root
+{
+    --pbar-background: rgba(0, 0, 0, 0.3);
+
+    --pbar-foreground: rgba(68, 68, 68, 0.345);
+
+    --timeout-milisec: 1000;
+}
+
+.pbar-active {
+    background-size: 200% 100%;
+    background-image: linear-gradient(to left, var(--pbar-foreground) 50%, var(--pbar-background) 50%);
+    animation: progressbar calc(var(--timeout-milisec) * 1ms) linear forwards;
+
+}
+.pbar-inactive {
+    background-color: var(--pbar-background);
+}
+
+@keyframes progressbar {
+    0% { background-position: 0 0; }
+    100% { background-position: -100% 0; }
 }

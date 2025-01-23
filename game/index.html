@@ -26,6 +26,10 @@
 
       function readFile(file){
         alert(file.value);
+        fetch(file)
+          .then(x => x.text())
+          .then(y => alert(y));
+        return;
         fetch(file.value)
           .then((res) => res.json())
           .then((text) => {

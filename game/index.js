@@ -5,6 +5,13 @@ let clickObject;
 
 function Ready(){
     clickObject = document.getElementById("clickCount");
+    onbeforeunload = BeforeUnload;
+
+    LoadLocal();
+}
+
+function BeforeUnload(){
+    SaveLocal();
 }
 
 function Save(){
@@ -17,6 +24,16 @@ function Load(fileInput) {
 function LoadPart2(e){
     LoadSave(JSON.parse(e.target.result));
     UpdateDisplay();
+}
+
+function SaveLocal() {
+    let save = CreateSave();
+    localStorage.setItem("save", JSON.stringify(save));
+}
+
+function LoadLocal(){
+    let save = JSON.parse(localStorage.getItem("save"));
+    LoadSave(save);
 }
 
 function CreateSave(){

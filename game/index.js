@@ -6,6 +6,7 @@ let clickObject;
 function Ready(){
     clickObject = document.getElementById("clickButton");
     onbeforeunload = BeforeUnload;
+    onvisibilitychange = BeforeUnload;
 
     LoadLocal();
 }

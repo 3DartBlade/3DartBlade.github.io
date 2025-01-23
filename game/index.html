@@ -24,7 +24,7 @@
         tempLink.remove();
       }
       function callbackTest(event){
-        alert(typeof(event));
+        alert(event.target.result);
       }
       function readFile(file){
         //alert(file.value);
@@ -33,8 +33,8 @@
         let reader = new FileReader();
         //reader.readAsText(file.value);
         //reader.addEventListener("loadend", callbackTest);
-        await reader.readAsText(file.files[0]);
-        alert(reader.result);
+        reader.onload = callbackTest;
+        reader.readAsText(file.files[0]);
         
         
         //fetch(file)
@@ -52,7 +52,7 @@
     </script>
   </head>
   <body>
-    <p>Version: 0.4</p><br>
+    <p>Version: 0.5</p><br>
     <button onClick="saveFile()">save</button>
     <input type="file" name="file" id="file" value="" onchange="readFile(this)"/>
   </body>

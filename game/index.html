@@ -32,8 +32,9 @@
         //alert(file.files[0]);
         let reader = new FileReader();
         //reader.readAsText(file.value);
-        reader.addEventListener("loadend", callbackTest);
-        reader.readAsText(file.files[0]);
+        //reader.addEventListener("loadend", callbackTest);
+        await reader.readAsText(file.files[0]);
+        alert(reader.result);
         
         
         //fetch(file)
@@ -51,7 +52,7 @@
     </script>
   </head>
   <body>
-    <p>Version: 0.3</p><br>
+    <p>Version: 0.4</p><br>
     <button onClick="saveFile()">save</button>
     <input type="file" name="file" id="file" value="" onchange="readFile(this)"/>
   </body>

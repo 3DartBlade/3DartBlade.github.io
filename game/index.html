@@ -23,8 +23,8 @@
         tempLink.click();
         tempLink.remove();
       }
-      function callbackTest(){
-        alert("Did somebody call Back?");
+      function callbackTest(event){
+        alert(typeof(event));
       }
       function readFile(file){
         //alert(file.value);
@@ -51,7 +51,7 @@
     </script>
   </head>
   <body>
-    <p>Version: 0.2</p><br>
+    <p>Version: 0.3</p><br>
     <button onClick="saveFile()">save</button>
     <input type="file" name="file" id="file" value="" onchange="readFile(this)"/>
   </body>

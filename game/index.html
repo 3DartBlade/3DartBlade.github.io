@@ -26,6 +26,11 @@
 
       function readFile(file){
         alert(file.value);
+        alert(file.files);
+        alert(file.files[0]);
+        let reader = new FileReader();
+        reader.readAsText(file.value);
+        
         fetch(file)
           .then(x => x.text())
           .then(y => alert(y));

@@ -6,13 +6,27 @@ body{
 }
 .topbar {
     padding: 1% 0.75%;
-    font-size: 200%;
+    font-size: 300%;
     box-sizing: border-box;
     display: flex;
     width: 100%;
     justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.33);
 }
+
+.custom-file-upload {
+    border: none;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.25);
+    border-radius: 10%;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+.nodisplay{
+    display: none;
+}
+
 input {
     font-size: 100%;
 }

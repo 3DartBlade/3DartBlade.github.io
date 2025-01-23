@@ -6,6 +6,7 @@ body{
 }
 .topbar{
     padding: 0.75%;
+    font-size: 200%;
     box-sizing: border-box;
     display: flex;
     width: 100%;
@@ -20,7 +21,7 @@ body{
     color: #d8d8d8;
     border: none;
     font-size: 200%;
-    padding: 5%;
+    padding: 10%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);

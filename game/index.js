@@ -134,7 +134,7 @@ function UpdateDisplay(){
     document.getElementById("MultText").innerHTML = "Cost: x" + (Math.round(costIncrease * 100) / 100) + "<br>$/sec: " + (Math.round((1.0/(clickCooldown/1000) * clickAmount) * 100) / 100);
     document.getElementById("VersionDisplay").innerHTML = "Version: " + version.join(".") + "<br> Prestige: <span id='prestige'>" + prestige + "</span>";
     document.querySelector(':root').style.setProperty('--prestigeHue', (prestige % 12)*30);
-    document.querySelector(':root').style.setProperty('--prestigeSat', prestige * (100.0/(12 * 12)));
+    document.querySelector(':root').style.setProperty('--prestigeSat', prestige * (100.0/(12 * 6)));
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

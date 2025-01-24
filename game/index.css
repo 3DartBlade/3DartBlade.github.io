@@ -4,7 +4,7 @@ body{
     padding: 0;
     margin: 0;
 }
-.topbar {
+#topbar {
     padding: 1% 0.75%;
     font-size: 300%;
     box-sizing: border-box;
@@ -13,14 +13,31 @@ body{
     justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.33);
 }
-.custom-file-upload {
+#upgrades{
+    padding: 4vw;
+    font-size: 300%;
+    box-sizing: border-box;
+    display: flex;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    justify-content: space-between;
+    background-color: rgba(0, 0, 0, 0.33);
+}
+.custom-button {
     border: none;
     color: white;
     background-color: rgba(255, 255, 255, 0.25);
-    border-radius: 10%;
+    border-radius: 5vh;
     display: inline-block;
     padding: 6px 12px;
     cursor: pointer;
+
+    user-select: none; /* standard syntax */
+    -webkit-user-select: none; /* webkit (safari, chrome) browsers */
+    -moz-user-select: none; /* mozilla browsers */
+    -khtml-user-select: none; /* webkit (konqueror) browsers */
+    -ms-user-select: none; /* IE10+ */
 }
 .nodisplay{
     display: none;
@@ -53,13 +70,17 @@ button {
 
     --pbar-foreground: rgba(68, 68, 68, 0.345);
 
-    --timeout-milisec: 1000;
-}
+    --timeout-millisec: 1000;
 
+    --prestige: 1;
+}
+#prestige{
+    color: hsl(var(--prestige), 100%, 50%);
+}
 .pbar-active {
     background-size: 200% 100%;
     background-image: linear-gradient(to left, var(--pbar-foreground) 50%, var(--pbar-background) 50%);
-    animation: progressbar calc(var(--timeout-milisec) * 1ms) linear forwards;
+    animation: progressbar calc(var(--timeout-millisec) * 1ms) linear forwards;
 
 }
 .pbar-inactive {

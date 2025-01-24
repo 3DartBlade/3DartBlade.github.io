@@ -3,19 +3,23 @@
   <head>
     <meta charset="utf-8">
     <title>Game</title>
-    <link href="index.css?v=11" rel="stylesheet" />
+    <link href="index.css?v=15" rel="stylesheet" />
   
-    <script src="index.js?v=4"></script>
+    <script src="index.js?v=15"></script>
   </head>
   <body>
-    <div class="topbar">
-      <span>Version: 0.10</span>
-      <span><label for="save" class="custom-file-upload">Save</label><button id="save" onClick="Save()" class="nodisplay">Save</button> <label for="file" class="custom-file-upload">Load</label><input type="file" name="file" id="file" value="" onchange="Load(this)" class="nodisplay"/></span>
-      <span>placeholder</span>
+    <div id="topbar">
+      <span id="VersionDisplay">Version: 0.11<br>Prestige: <span id ="prestige">1</span></span>
+      <span><label for="save" class="custom-button">Save</label><button id="save" onClick="Save()" class="nodisplay">Save</button> <label for="file" class="custom-button">Load</label><input type="file" name="file" id="file" value="" onchange="Load(this)" class="nodisplay"/></span>
+      <span id="MultText">Cost x</span>
     </div>
     <button id="clickButton" onclick="IncreaseClick()">Click me</button>
 
-
+    <div id="upgrades">
+      <span><label id="upgrade0_label" for="upgrade0" class="custom-button">Upgrade</label><button id="upgrade0" class="nodisplay" onclick="Upgrade(0)">aids</button></span>
+      <span><label id="upgrade1_label" for="upgrade1" class="custom-button">Upgrade</label><button id="upgrade1" class="nodisplay" onclick="Upgrade(1)">aids</button></span>
+      <span><label id="upgrade2_label" for="upgrade2" class="custom-button">Upgrade</label><button id="upgrade2" class="nodisplay" onclick="Upgrade(2)">aids</button></span>
+    </div>
 
     <script>Ready()</script>
   </body>

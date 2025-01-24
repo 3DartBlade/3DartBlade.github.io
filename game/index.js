@@ -1,4 +1,4 @@
-const version = [0,15,1];
+const version = [0,15,2];
 var clicks = 0;
 var lastClick = 0;
 var clickAmount = 1;

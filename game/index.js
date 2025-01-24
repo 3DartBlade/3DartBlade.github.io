@@ -61,6 +61,10 @@ function LoadLocal(){
 function CreateSave(){
     return {version, date: new Date(), clicks, clickCooldown, upgrades, lastClick, cooldownFinish, clickAmount, availableUpgrades, costIncrease, prestige};
 }
+function  CalculateCost()
+{
+    return  1 + Math.pow(0.85, prestige-1);
+}
 function LoadSave(data){
     if(typeof(data.version) === typeof ("string")) ResetSave(false);
     clicks = data.clicks;
@@ -75,10 +79,11 @@ function LoadSave(data){
     if (isNaN(prestige)){
         prestige = 1;
     }
-    costIncrease = data.costIncrease;
-    if (isNaN(costIncrease)){
-        costIncrease = 2;
-    }
+    costIncrease = CalculateCost();
+    //costIncrease = data.costIncrease;
+    //if (isNaN(costIncrease)){
+        //costIncrease = 2;
+    //}
     upgrades = data.upgrades;
     if (data.availableUpgrades.length === 3)
         availableUpgrades = data.availableUpgrades;
@@ -175,7 +180,7 @@ function Upgrade(index){
             prestige += 1;
             ResetSave(true);
             availableUpgrades[2].cost = prestigeCost();
-            costIncrease = ((costIncrease-1.0)*0.9)+1.0;
+            costIncrease = CalculateCost();
             SaveLocal();
             break;
         default:

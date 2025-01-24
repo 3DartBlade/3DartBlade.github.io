@@ -72,10 +72,11 @@ button {
 
     --timeout-millisec: 1000;
 
-    --prestige: 1;
+    --prestigeHue: 1;
+    --prestigeSat: 1;
 }
 #prestige{
-    color: hsl(var(--prestige), 100%, 50%);
+    color: hsl(var(--prestigeHue), calc(var(--prestigeSat) * 1%), 50%);
 }
 .pbar-active {
     background-size: 200% 100%;

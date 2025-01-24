@@ -1,4 +1,4 @@
-const version = [0,15,0];
+const version = [0,15,1];
 var clicks = 0;
 var lastClick = 0;
 var clickAmount = 1;
@@ -128,7 +128,8 @@ function UpdateDisplay(){
     document.getElementById("upgrade2_label").innerHTML = "Upgrade " + availableUpgrades[2].type + " $" + availableUpgrades[2].cost;
     document.getElementById("MultText").innerHTML = "Cost: x" + (Math.round(costIncrease * 100) / 100) + "<br>$/sec: " + (Math.round((1.0/(clickCooldown/1000) * clickAmount) * 100) / 100);
     document.getElementById("VersionDisplay").innerHTML = "Version: " + version.join(".") + "<br> Prestige: <span id='prestige'>" + prestige + "</span>";
-    document.querySelector(':root').style.setProperty('--prestige', (prestige % 12)*30);
+    document.querySelector(':root').style.setProperty('--prestigeHue', (prestige % 12)*30);
+    document.querySelector(':root').style.setProperty('--prestigeSat', prestige * (100.0/(12 * 12)));
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

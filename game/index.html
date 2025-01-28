@@ -15,11 +15,22 @@
     </div>
     <button id="clickButton" onclick="IncreaseClick()">Click me</button>
 
+    <div id="sideMenu">
+      <span><label for="hideButton" class="custom-button">Prestige rewards</label><button id="hideButton" class="nodisplay" onclick="Hide()">Prestige rewards</button></span>
+      <div id="hidden" class="nodisplay">
+        <ul>
+          <li><span>Prestige 12: </span><span id="prestige12_reward">???</span></li>
+        </ul>
+      </div>
+    </div>
+
     <div id="upgrades">
       <span><label id="upgrade0_label" for="upgrade0" class="custom-button">Upgrade</label><button id="upgrade0" class="nodisplay" onclick="Upgrade(0)">aids</button></span>
       <span><label id="upgrade1_label" for="upgrade1" class="custom-button">Upgrade</label><button id="upgrade1" class="nodisplay" onclick="Upgrade(1)">aids</button></span>
       <span><label id="upgrade2_label" for="upgrade2" class="custom-button">Upgrade</label><button id="upgrade2" class="nodisplay" onclick="Upgrade(2)">aids</button></span>
     </div>
+
+
 
     <script>Ready()</script>
   </body>

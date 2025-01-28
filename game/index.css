@@ -1,4 +1,4 @@
-body{
+html, body{
     background-color: #292110;
     color: #d8d8d8;
     padding: 0;
@@ -6,7 +6,8 @@ body{
 }
 #topbar {
     padding: 1% 0.75%;
-    font-size: 300%;
+    font-size: 5vmin;
+    height: var(--topbar-height);
     box-sizing: border-box;
     display: flex;
     width: 100%;
@@ -15,7 +16,7 @@ body{
 }
 #upgrades{
     padding: 4vw;
-    font-size: 300%;
+    font-size: 5vmin;
     box-sizing: border-box;
     display: flex;
     position: absolute;
@@ -23,15 +24,19 @@ body{
     width: 100%;
     justify-content: space-between;
     background-color: rgba(0, 0, 0, 0.33);
+    height: var(--bottom-height);
 }
 .custom-button {
+    touch-action: manipulation;
+    padding: 2vmin;
     border: none;
     color: white;
     background-color: rgba(255, 255, 255, 0.25);
-    border-radius: 5vh;
+    border-radius: 5vmin;
     display: inline-block;
-    padding: 6px 12px;
     cursor: pointer;
+    font-size: 5vmin;
+    height: calc(var(--button-height) - 4vmin);
 
     user-select: none; /* standard syntax */
     -webkit-user-select: none; /* webkit (safari, chrome) browsers */
@@ -41,13 +46,23 @@ body{
 }
 .nodisplay{
     display: none;
+    background: transparent;
+}
+#hidden{
+    padding: 2vmin;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 33.33%;
+    height: calc(100vh - var(--topbar-height) - var(--bottom-height) - var(--button-height) - 4vmin);
+    border-radius: 0 5vmin 5vmin 0;
+    font-size: 5vmin;
 }
 
 input {
-    font-size: 100%;
+    font-size: 1vmin;
 }
 button {
-    font-size: 100%;
+    font-size: 1vmin;
 }
 
 #clickButton{
@@ -55,8 +70,8 @@ button {
     position: absolute;
     color: #d8d8d8;
     border: none;
-    font-size: 500%;
-    padding: min(20vw, 20vh);
+    font-size: 10vmin;
+    padding: 20vmin;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -74,6 +89,11 @@ button {
 
     --prestigeHue: 1;
     --prestigeSat: 1;
+
+    --topbar-height: 15vmin;
+    --bottom-height: 20vmin;
+
+    --button-height: 10vmin;
 }
 #prestige{
     color: hsl(var(--prestigeHue), calc(var(--prestigeSat) * 1%), 50%);

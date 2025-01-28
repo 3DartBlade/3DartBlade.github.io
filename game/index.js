@@ -1,21 +1,20 @@
-const version = [0,15,2];
+const version = [0,16,0];
 var clicks = 0;
 var lastClick = 0;
 var clickAmount = 1;
 
 var clickCooldown = 10000;
 var cooldownFinish = 0;
-var upgrades;
 
 var costIncrease = 2;
 var prestige = 1;
 
-var upgradePool = [{type:"cooldown", value:0.9, cost: 2}, {type:"amount", value:1, cost: 2}, {type:"prestige", value:0, cost: prestigeCost()}];
+let completeUpgradePool = [{type:"cooldown", level:0, cost: 2}, {type:"amount", level:0, cost: 2}, {type:"prestige", level:0, cost: prestigeCost()}];
 function prestigeCost()
 {
     return Math.pow(2, prestige+2);
 }
-var availableUpgrades = structuredClone([upgradePool[0], upgradePool[1], upgradePool[2]]);
+var upgrades = structuredClone([completeUpgradePool[0], completeUpgradePool[1], completeUpgradePool[2]]);
 
 let clickObject;
 
@@ -59,36 +58,63 @@ function LoadLocal(){
 }
 
 function CreateSave(){
-    return {version, date: new Date(), clicks, clickCooldown, upgrades, lastClick, cooldownFinish, clickAmount, availableUpgrades, costIncrease, prestige};
+    return {version, date: new Date(), clicks, clickCooldown, lastClick, cooldownFinish, clickAmount, upgrades, prestige};
 }
 function  CalculateCost()
 {
-    return  1 + Math.pow(0.85, prestige-1);
+    return  1 + Math.pow(0.9, prestige-1);
 }
+
+function Hide()
+{
+    var element =document.getElementById("hidden");
+    if (element.classList.contains("nodisplay"))
+        element.classList.remove("nodisplay");
+    else
+        element.classList.add("nodisplay");
+}
+var animTimeout;
 function LoadSave(data){
+    clearTimeout(animTimeout);
+
     if(typeof(data.version) === typeof ("string")) ResetSave(false);
+    if(data.version[0] === 0 && data.version[1] < 16)
+    {
+        clicks = 0; clickCooldown = 10000; lastClick = 0; cooldownFinish = 0; clickAmount = 1; upgrades = structuredClone([completeUpgradePool[0], completeUpgradePool[1], completeUpgradePool[2]]);
+        upgrades[2].cost = prestigeCost();
+
+        if(prestige>= 12)
+            IncreaseClick();
+
+        UpdateDisplay();
+        return;
+    }
+
     clicks = data.clicks;
     if (isNaN(clicks)){
         clicks = 0;
     }
-    clickCooldown = data.clickCooldown;
+    upgrades = data.upgrades;
+    if (upgrades === undefined){
+        upgrades = structuredClone(completeUpgradePool);
+    }
+
+    clickCooldown = CalculateCooldownValue(upgrades[0] = data.upgrades[0]);
     if (isNaN(clickCooldown)){
         clickCooldown = 10000;
+        upgrades[0] = completeUpgradePool[0];
+    }
+    clickAmount = CalculateAmountValue(upgrades[1] = data.upgrades[1]);
+    if (isNaN(clickAmount)){
+        clickAmount = 1;
+        upgrades[1] = completeUpgradePool[1];
     }
     prestige = data.prestige;
     if (isNaN(prestige)){
         prestige = 1;
     }
     costIncrease = CalculateCost();
-    //costIncrease = data.costIncrease;
-    //if (isNaN(costIncrease)){
-        //costIncrease = 2;
-    //}
-    upgrades = data.upgrades;
-    if (data.availableUpgrades.length === 3)
-        availableUpgrades = data.availableUpgrades;
-    else
-        availableUpgrades = structuredClone([upgradePool[0], upgradePool[1], upgradePool[2]]);
+
     lastClick = data.lastClick;
     if (isNaN(lastClick)){
         lastClick = 0;
@@ -100,10 +126,11 @@ function LoadSave(data){
     if (isNaN(cooldownFinish)){
         cooldownFinish = 0;
     }
-    clickAmount = data.clickAmount;
-    if (isNaN(clickAmount)){
-        clickAmount = 1;
-    }
+
+
+    if(prestige>= 12)
+        IncreaseClick();
+
     UpdateDisplay();
 }
 
@@ -125,22 +152,50 @@ function DispatchReadFile(file){
     reader.readAsText(file);
 }
 
-function UpdateDisplay(){
-    clickObject.innerHTML = clicks.toString();
+function ShortenNum(num)
+{
+    if (num > Math.pow(10, 12))
+        return (Math.floor(num/Math.pow(10, 10)) / 100).toString() + "T";
+    else if (num > Math.pow(10, 9))
+        return (Math.floor(num/Math.pow(10, 7)) / 100).toString() + "B";
+    else if (num > Math.pow(10, 6))
+        return (Math.floor(num/Math.pow(10, 4)) / 100).toString() + "M";
+    else if(num > Math.pow(10, 3))
+        return (Math.floor(num/Math.pow(10, 1)) / 100).toString() + "K";
+    else
+        return num.toString();
+}
 
-    document.getElementById("upgrade0_label").innerHTML = "Upgrade " + availableUpgrades[0].type + " $" + availableUpgrades[0].cost;
-    document.getElementById("upgrade1_label").innerHTML = "Upgrade " + availableUpgrades[1].type + " $" + availableUpgrades[1].cost;
-    document.getElementById("upgrade2_label").innerHTML = "Upgrade " + availableUpgrades[2].type + " $" + availableUpgrades[2].cost;
-    document.getElementById("MultText").innerHTML = "Cost: x" + (Math.round(costIncrease * 100) / 100) + "<br>$/sec: " + (Math.round((1.0/(clickCooldown/1000) * clickAmount) * 100) / 100);
+function UpdateDisplay(){
+    clickObject.innerHTML = ShortenNum(clicks);
+
+    document.getElementById("upgrade0_label").innerHTML = "Upgrade " + upgrades[0].type + " $" + ShortenNum(CalculateUpgradeCost(upgrades[0]));
+    document.getElementById("upgrade1_label").innerHTML = "Upgrade " + upgrades[1].type + " $" + ShortenNum(CalculateUpgradeCost(upgrades[1]));
+    document.getElementById("upgrade2_label").innerHTML = "Upgrade " + upgrades[2].type + " $" + ShortenNum(prestigeCost());
+    document.getElementById("MultText").innerHTML = "Cost: x" + (Math.round(costIncrease * 100) / 100) + "<br>$/sec: " + ShortenNum(Math.round((1.0/(clickCooldown/1000) * clickAmount) * 100) / 100);
     document.getElementById("VersionDisplay").innerHTML = "Version: " + version.join(".") + "<br> Prestige: <span id='prestige'>" + prestige + "</span>";
+
     document.querySelector(':root').style.setProperty('--prestigeHue', (prestige % 12)*30);
     document.querySelector(':root').style.setProperty('--prestigeSat', prestige * (100.0/(12 * 12)));
+
+    if(prestige >= 12)
+        document.getElementById("prestige12_reward").innerHTML = "autoclicker";
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
+var minCooldown = 1000.0/24;
+
 function IncreaseClick(){
-    if (cooldownFinish - Date.now() <= 0)
+    document.getElementById("hideButton").innerHTML = clickCooldown.toString();
+    if(clickCooldown <= minCooldown && prestige >= 12) {
+        clicks += moneySinceLastClick();
+        UpdateDisplay();
+        lastClick = Date.now();
+        setTimeout(IncreaseClick, minCooldown);
+
+    }
+    else if (cooldownFinish - Date.now() <= 0)
     {
         clicks += clickAmount;
         UpdateDisplay();
@@ -149,39 +204,75 @@ function IncreaseClick(){
         StartCooldown();
     }
 }
+
+function moneySinceLastClick(){
+    var money = (1.0/clickCooldown) * clickAmount * (Date.now()-lastClick);
+    return Math.floor(money);
+}
+
 function StartCooldown()
 {
-    if(clickCooldown <= 10) return;
+
     clickObject.classList.remove("pbar-inactive");
     clickObject.classList.add("pbar-active");
+    clickObject.style.animation = 'none';
+    clickObject.offsetHeight; /* trigger reflow */
+    clickObject.style.animation = null;
     var currentCooldown = Math.max(0, cooldownFinish - Date.now());
     document.querySelector(':root').style.setProperty('--timeout-millisec', currentCooldown);
-    setTimeout(DeactivatePbar, currentCooldown);
+    animTimeout = setTimeout(DeactivatePbar, currentCooldown);
 }
 function DeactivatePbar()
 {
     clickObject.classList.add("pbar-inactive");
     clickObject.classList.remove("pbar-active");
+
+    if(prestige >= 12)
+        IncreaseClick();
 }
 
+function CalculateUpgradeCost(upgrade)
+{
+    return Math.ceil(2 * Math.pow(costIncrease, upgrade.level));
+}
+
+let cooldownPower = 2;
+let cooldownPowerPower = 50;
+function  CalculateCooldownValue(upgrade) {
+    console.log(10000.0+" / (" + (upgrade.level+1) + " ^ ("+ (upgrade.level+1)+" / "+cooldownPower+"))");
+    return 10000.0/(Math.pow((upgrade.level+1), Math.pow(upgrade.level+1, 1.0/cooldownPowerPower)/cooldownPower));
+}
+
+let amountBase = 2;
+let amountMod = 9;
+let amountStart = 1;
+function  CalculateAmountValue(upgrade) {
+    // ((x % m) + (m / (b-1))) * pow(b, floor(x / m))-(m / (b-1)) + 1
+    let x = upgrade.level;
+    return Math.round(((x % amountMod) + (amountMod / (amountBase-1))) * Math.pow(amountBase, Math.floor(x / amountMod))-(amountMod / (amountBase-1)) + amountStart);
+}
 function Upgrade(index){
-    if (clicks < availableUpgrades[index].cost) { return; }
-    clicks -= availableUpgrades[index].cost
-    availableUpgrades[index].cost = Math.ceil(availableUpgrades[index].cost * costIncrease);
-    switch (availableUpgrades[index].type){
+    let cost = CalculateUpgradeCost(upgrades[index]);
+    if (clicks < cost) { return; }
+    clicks -= cost;
+    upgrades[index].level++;
+    switch (upgrades[index].type){
         case "cooldown":
-            clickCooldown *= availableUpgrades[index].value;
-            clickCooldown = Math.floor(clickCooldown);
+
+            clickCooldown = CalculateCooldownValue(upgrades[index]);
             break;
         case "amount":
-            clickAmount += availableUpgrades[index].value;
+            clickAmount = CalculateAmountValue(upgrades[index]);
             break;
         case "prestige":
             prestige += 1;
+            clearTimeout(animTimeout);
             ResetSave(true);
-            availableUpgrades[2].cost = prestigeCost();
+            upgrades[2].cost = prestigeCost();
             costIncrease = CalculateCost();
             SaveLocal();
+            if(prestige >= 12)
+                IncreaseClick();
             break;
         default:
             ResetSave(false);
@@ -190,9 +281,13 @@ function Upgrade(index){
     UpdateDisplay();
 }
 
+function PopRandomUpgrade(){
+
+}
+
 function ResetSave(isPrestige){
     localStorage.clear();
     if(!isPrestige){costIncrease = 2; prestige = 1}
-    clicks = 0; clickCooldown = 10000; upgrades = []; lastClick = 0; cooldownFinish = 0; clickAmount = 1; availableUpgrades = structuredClone([upgradePool[0], upgradePool[1], upgradePool[2]]);
+    clicks = 0; clickCooldown = 10000; upgrades = []; lastClick = 0; cooldownFinish = 0; clickAmount = 1; upgrades = structuredClone([completeUpgradePool[0], completeUpgradePool[1], completeUpgradePool[2]]);
     UpdateDisplay();
 }

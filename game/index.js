@@ -203,6 +203,10 @@ function IncreaseClick(){
         cooldownFinish = lastClick + clickCooldown;
         StartCooldown();
     }
+    else
+    {
+        lastClick -= clickCooldown / 10;
+    }
 }
 
 function moneySinceLastClick(){

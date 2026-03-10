@@ -32,11 +32,11 @@ html, body{
     border: none;
     color: white;
     background-color: rgba(255, 255, 255, 0.25);
-    border-radius: 5vmin;
+    border-radius: 3vmin;
     display: inline-block;
     cursor: pointer;
-    font-size: 5vmin;
-    height: calc(var(--button-height) - 4vmin);
+    font-size: 3vmin;
+    /*height: calc(var(--button-height) - 4vmin);*/
 
     user-select: none; /* standard syntax */
     -webkit-user-select: none; /* webkit (safari, chrome) browsers */
@@ -52,10 +52,10 @@ html, body{
     padding: 2vmin;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.3);
-    width: 33.33%;
+    width: 66.67%;
     height: calc(100vh - var(--topbar-height) - var(--bottom-height) - var(--button-height) - 4vmin);
     border-radius: 0 5vmin 5vmin 0;
-    font-size: 5vmin;
+    font-size: 3vmin;
 }
 
 input {
@@ -91,9 +91,11 @@ button {
     --prestigeSat: 1;
 
     --topbar-height: 15vmin;
-    --bottom-height: 20vmin;
+    --bottom-height: 22vmin;
 
     --button-height: 10vmin;
+
+    --progress-bump: 0;
 }
 #prestige{
     color: hsl(var(--prestigeHue), calc(var(--prestigeSat) * 1%), 50%);
@@ -102,13 +104,12 @@ button {
     background-size: 200% 100%;
     background-image: linear-gradient(to left, var(--pbar-foreground) 50%, var(--pbar-background) 50%);
     animation: progressbar calc(var(--timeout-millisec) * 1ms) linear forwards;
-
 }
 .pbar-inactive {
     background-color: var(--pbar-background);
 }
 
 @keyframes progressbar {
-    0% { background-position: 0 0; }
+    0% { background-position: calc(0% - var(--progress-bump) * 1%) 0; }
     100% { background-position: -100% 0; }
 }

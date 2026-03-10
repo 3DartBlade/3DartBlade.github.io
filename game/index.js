@@ -1,4 +1,4 @@
-const version = [0,17,0];
+const version = [0,17,1];
 var clicks = 0;
 var lastClick = 0;
 var clickAmount = 1;
@@ -54,7 +54,8 @@ function SaveLocal() {
 
 function LoadLocal(){
     let save = JSON.parse(localStorage.getItem("save"));
-    LoadSave(save);
+    if (save != null)
+        LoadSave(save);
 }
 
 function CreateSave(){

@@ -1,4 +1,4 @@
-const version = [0,17,1];
+const version = [1,0,0];
 var clicks = 0;
 var lastClick = 0;
 var clickAmount = 1;
@@ -84,7 +84,7 @@ function LoadSave(data){
         clicks = 0; clickCooldown = 10000; lastClick = 0; cooldownFinish = 0; clickAmount = 1; upgrades = structuredClone([completeUpgradePool[0], completeUpgradePool[1], completeUpgradePool[2]]);
         upgrades[2].cost = prestigeCost();
 
-        if(prestige>= 12)
+        if(prestige>= 8)
             IncreaseClick();
 
         UpdateDisplay();
@@ -127,16 +127,53 @@ function LoadSave(data){
     if(lastClick > Date.now()){
         lastClick = Date.now();
     }
+
+    if(prestige >= 12 && prestige < 20){
+        let offlineEarnings = Math.min(
+            Math.round(((Date.now() - lastClick) / 1000.0) / clickCooldown),
+            Math.max(
+                0,
+                Math.round(
+                    Math.pow(
+                        ((Date.now() - lastClick) / 1000.0) / clickCooldown,
+                        1.0-(1/(prestige-10))
+                    ) * clickAmount
+                )
+            )
+        );
+        clicks += offlineEarnings;
+        if (offlineEarnings > 0)
+            alert("You earned $" + ShortenNum(offlineEarnings) + " while you were offline!");
+    }
+    else if(prestige >= 20 && prestige < 28){
+        let offlineEarnings = Math.round(((Date.now() - lastClick) / 1000.0) / clickCooldown) * clickAmount;
+        clicks += offlineEarnings;
+        if (offlineEarnings > 0)
+            alert("You earned $" + ShortenNum(offlineEarnings) + " while you were offline!");
+    }
+    else if (prestige >= 28){
+        let offlineEarnings = Math.round(Math.pow(Math.round(((Date.now() - lastClick) / 1000.0) / clickCooldown), 1 + ((prestige - 27) / 10.0))) * clickAmount;
+        clicks += offlineEarnings;
+        if (offlineEarnings > 0)
+            alert("You earned $" + ShortenNum(offlineEarnings) + " while you were offline!");
+    }
+
     cooldownFinish = data.cooldownFinish;
     if (isNaN(cooldownFinish)){
         cooldownFinish = 0;
     }
 
 
-    if(prestige>= 12)
+    if(prestige>= 8)
         IncreaseClick();
 
     UpdateDisplay();
+
+    if (prestige >= 16)
+        AutoUpgrade();
+
+    if(prestige >= 24)
+        AutoSpeedUp();
 }
 
 function WriteFile(data){
@@ -159,7 +196,21 @@ function DispatchReadFile(file){
 
 function ShortenNum(num)
 {
-    if (num > Math.pow(10, 12))
+    if (num > Math.pow(10, 33))
+        return (Math.floor(num/Math.pow(10, 31)) / 100).toString() + "d";
+    else if (num > Math.pow(10, 30))
+        return (Math.floor(num/Math.pow(10, 28)) / 100).toString() + "N";
+    else if (num > Math.pow(10, 27))
+        return (Math.floor(num/Math.pow(10, 25)) / 100).toString() + "O";
+    else if (num > Math.pow(10, 24))
+        return (Math.floor(num/Math.pow(10, 22)) / 100).toString() + "S";
+    else if (num > Math.pow(10, 21))
+        return (Math.floor(num/Math.pow(10, 19)) / 100).toString() + "s";
+    else if (num > Math.pow(10, 18))
+        return (Math.floor(num/Math.pow(10, 16)) / 100).toString() + "Q";
+    else if (num > Math.pow(10, 15))
+        return (Math.floor(num/Math.pow(10, 13)) / 100).toString() + "q";
+    else if (num > Math.pow(10, 12))
         return (Math.floor(num/Math.pow(10, 10)) / 100).toString() + "T";
     else if (num > Math.pow(10, 9))
         return (Math.floor(num/Math.pow(10, 7)) / 100).toString() + "B";
@@ -174,9 +225,9 @@ function ShortenNum(num)
 function UpdateDisplay(){
     clickObject.innerHTML = ShortenNum(clicks);
 
-    document.getElementById("upgrade0_label").innerHTML = "Upgrade " + upgrades[0].type + " $" + ShortenNum(CalculateUpgradeCost(upgrades[0]) + "<br>Current: " + (Math.round(clickCooldown / 10.0)/100.0) + "s");
-    document.getElementById("upgrade1_label").innerHTML = "Upgrade " + upgrades[1].type + " $" + ShortenNum(CalculateUpgradeCost(upgrades[1]) + "<br>Current: $" + clickAmount);
-    document.getElementById("upgrade2_label").innerHTML = "Upgrade " + upgrades[2].type + " $" + ShortenNum(prestigeCost() + "<br>Next: x" + (Math.round((1 + Math.pow(0.9, prestige))*100)) / 100.0);
+    document.getElementById("upgrade0_label").innerHTML = "Upgrade " + upgrades[0].type + " $" + ShortenNum(CalculateUpgradeCost(upgrades[0])) + "<br>Current: " + (Math.round(clickCooldown / 10.0)/100.0) + "s";
+    document.getElementById("upgrade1_label").innerHTML = "Upgrade " + upgrades[1].type + " $" + ShortenNum(CalculateUpgradeCost(upgrades[1])) + "<br>Current: $" + ShortenNum(clickAmount);
+    document.getElementById("upgrade2_label").innerHTML = "Upgrade " + upgrades[2].type + " $" + ShortenNum(prestigeCost()) + "<br>Next: x" + (Math.round((1 + Math.pow(0.9, prestige))*100)) / 100.0;
     document.getElementById("MultText").innerHTML = "Cost: x" + (Math.round(costIncrease * 100) / 100) + "<br>$/sec: " + ShortenNum(Math.round((1.0/(clickCooldown/1000) * clickAmount) * 100) / 100);
     document.getElementById("VersionDisplay").innerHTML = "Version: " + version.join(".") + "<br> Prestige: <span id='prestige'>" + prestige + "</span>";
 
@@ -186,8 +237,23 @@ function UpdateDisplay(){
     if(prestige >= 4)
         document.getElementById("prestige4_reward").innerHTML = "tap to speed up!";
 
+    if(prestige >= 8)
+        document.getElementById("prestige8_reward").innerHTML = "auto clicker";
+
     if(prestige >= 12)
-        document.getElementById("prestige12_reward").innerHTML = "autoclicker";
+        document.getElementById("prestige12_reward").innerHTML = "offline earnings";
+
+    if(prestige >= 16)
+        document.getElementById("prestige16_reward").innerHTML = "auto upgrade";
+
+    if(prestige >= 20)
+        document.getElementById("prestige20_reward").innerHTML = "lossless offline";
+
+    if(prestige >= 24)
+        document.getElementById("prestige24_reward").innerHTML = "auto speed up";
+
+    if(prestige >= 28)
+        document.getElementById("prestige28_reward").innerHTML = "exponential offline";
 }
 
 // - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -196,7 +262,7 @@ var minCooldown = 1000.0/24;
 
 function IncreaseClick(){
     document.getElementById("hideButton").innerHTML = clickCooldown.toString();
-    if(clickCooldown <= minCooldown && prestige >= 12) {
+    if(clickCooldown <= minCooldown && prestige >= 8) {
         clicks += moneySinceLastClick();
         UpdateDisplay();
         lastClick = Date.now();
@@ -223,10 +289,14 @@ function IncreaseClick(){
         clickObject.style.animation = null;
         clearTimeout(animTimeout);
         animTimeout = setTimeout(DeactivatePbar, currentCooldown);
-        console.log(currentCooldown / clickCooldown);
         document.querySelector(':root').style.setProperty('--timeout-millisec', currentCooldown);
         document.querySelector(':root').style.setProperty('--progress-bump', (1.0 - currentCooldown / clickCooldown) * 100);
     }
+}
+
+function AutoSpeedUp(){
+    IncreaseClick();
+    setTimeout(AutoSpeedUp, Math.max(1000/(prestige - 23), 50));
 }
 
 function moneySinceLastClick(){
@@ -254,7 +324,7 @@ function DeactivatePbar()
 
     clickCooldown = CalculateCooldownValue(upgrades[0]);
 
-    if(prestige >= 12)
+    if(prestige >= 8)
         IncreaseClick();
 }
 
@@ -266,7 +336,6 @@ function CalculateUpgradeCost(upgrade)
 let cooldownPower = 2;
 let cooldownPowerPower = 50;
 function  CalculateCooldownValue(upgrade) {
-    console.log(10000.0+" / (" + (upgrade.level+1) + " ^ ("+ (upgrade.level+1)+" / "+cooldownPower+"))");
     return 10000.0/(Math.pow((upgrade.level+1), Math.pow(upgrade.level+1, 1.0/cooldownPowerPower)/cooldownPower));
 }
 
@@ -276,7 +345,10 @@ let amountStart = 1;
 function  CalculateAmountValue(upgrade) {
     // ((x % m) + (m / (b-1))) * pow(b, floor(x / m))-(m / (b-1)) + 1
     let x = upgrade.level;
-    return Math.round(((x % amountMod) + (amountMod / (amountBase-1))) * Math.pow(amountBase, Math.floor(x / amountMod))-(amountMod / (amountBase-1)) + amountStart);
+    let exp = Math.round(((x % amountMod) + (amountMod / (amountBase-1))) * Math.pow(amountBase, Math.floor(x / amountMod))-(amountMod / (amountBase-1)) + amountStart);
+
+    if (x <= 200) return exp;
+    if (x > 200) return 46137336 + ((x-200) * 4194288);
 }
 function Upgrade(index){
     let cost = CalculateUpgradeCost(upgrades[index]);
@@ -298,14 +370,29 @@ function Upgrade(index){
             upgrades[2].cost = prestigeCost();
             costIncrease = CalculateCost();
             SaveLocal();
-            if(prestige >= 12)
+            if(prestige >= 8)
                 IncreaseClick();
+            if(prestige >= 16)
+                AutoUpgrade();
+            if(prestige >= 24)
+                AutoSpeedUp();
             break;
         default:
             ResetSave(false);
             break;
     }
     UpdateDisplay();
+}
+
+function AutoUpgrade(){
+    setTimeout(AutoUpgrade, Math.max(1000/(prestige - 15), 50));
+    let lowest = Math.min(CalculateUpgradeCost(upgrades[0]), CalculateUpgradeCost(upgrades[1]));
+    if (clicks < lowest) return;
+    if (lowest == CalculateUpgradeCost(upgrades[0]))
+        Upgrade(0);
+    if (lowest == CalculateUpgradeCost(upgrades[1]))
+        Upgrade(1);
+
 }
 
 function PopRandomUpgrade(){

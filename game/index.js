@@ -1,4 +1,4 @@
-const version = [1,1,0];
+const version = [1,1,1];
 var clicks = 0;
 var lastClick = 0;
 var clickAmount = 1;
@@ -59,7 +59,7 @@ function LoadLocal(){
 }
 
 function CreateSave(){
-    return {version, date: new Date(), clicks, clickCooldown, lastClick, cooldownFinish, clickAmount, upgrades, prestige};
+    return {version, date: new Date(), clicks, clickCooldown, lastClick, cooldownFinish, clickAmount, upgrades, prestige, tokens: 0};
 }
 function  CalculateCost()
 {
@@ -128,9 +128,10 @@ function LoadSave(data){
         lastClick = Date.now();
     }
 
+
     if(prestige >= 12 && prestige < 20){
         let offlineEarnings = Math.min(
-            Math.round(((Date.now() - lastClick) / 1000.0) / clickCooldown),
+            Math.round(((Date.now() - lastClick) / 1000.0) / (clickCooldown/1000.0)),
             Math.max(
                 0,
                 Math.round(
@@ -146,13 +147,13 @@ function LoadSave(data){
             alert("You earned $" + ShortenNum(offlineEarnings) + " while you were offline!");
     }
     else if(prestige >= 20 && prestige < 28){
-        let offlineEarnings = Math.round(((Date.now() - lastClick) / 1000.0) / clickCooldown) * clickAmount;
+        let offlineEarnings = Math.round(((Date.now() - lastClick) / 1000.0) / (clickCooldown/1000.0)) * clickAmount;
         clicks += offlineEarnings;
         if (offlineEarnings > 0)
             alert("You earned $" + ShortenNum(offlineEarnings) + " while you were offline!");
     }
     else if (prestige >= 28){
-        let offlineEarnings = Math.round(Math.pow(Math.round(((Date.now() - lastClick) / 1000.0) / clickCooldown), 1 + ((prestige - 27) / 10.0))) * clickAmount;
+        let offlineEarnings = Math.round(Math.pow(Math.round(((Date.now() - lastClick) / 1000.0) / (clickCooldown/1000.0)), 1 + ((prestige - 27) / 10.0))) * clickAmount;
         clicks += offlineEarnings;
         if (offlineEarnings > 0)
             alert("You earned $" + ShortenNum(offlineEarnings) + " while you were offline!");

@@ -1,4 +1,4 @@
-const version = [1,0,0];
+const version = [1,1,0];
 var clicks = 0;
 var lastClick = 0;
 var clickAmount = 1;
@@ -352,6 +352,8 @@ function  CalculateAmountValue(upgrade) {
 }
 function Upgrade(index){
     let cost = CalculateUpgradeCost(upgrades[index]);
+    if (index == 2)
+        cost = prestigeCost();
     if (clicks < cost) { return; }
     clicks -= cost;
     upgrades[index].level++;
@@ -370,11 +372,11 @@ function Upgrade(index){
             upgrades[2].cost = prestigeCost();
             costIncrease = CalculateCost();
             SaveLocal();
-            if(prestige >= 8)
+            if(prestige == 8)
                 IncreaseClick();
-            if(prestige >= 16)
+            if(prestige == 16)
                 AutoUpgrade();
-            if(prestige >= 24)
+            if(prestige == 24)
                 AutoSpeedUp();
             break;
         default:
@@ -401,7 +403,7 @@ function PopRandomUpgrade(){
 
 function ResetSave(isPrestige){
     localStorage.clear();
-    if(!isPrestige){costIncrease = 2; prestige = 1}
-    clicks = Math.round(Math.pow(costIncrease, prestige - 1)); clickCooldown = 10000; upgrades = []; lastClick = 0; cooldownFinish = 0; clickAmount = 1; upgrades = structuredClone([completeUpgradePool[0], completeUpgradePool[1], completeUpgradePool[2]]);
+    if(!isPrestige){costIncrease = 2; prestige = 1; clicks = 0;}
+    clickCooldown = 10000; upgrades = []; lastClick = 0; cooldownFinish = 0; clickAmount = 1; upgrades = structuredClone([completeUpgradePool[0], completeUpgradePool[1], completeUpgradePool[2]]);
     UpdateDisplay();
 }

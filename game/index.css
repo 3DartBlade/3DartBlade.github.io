@@ -1,5 +1,5 @@
 html, body{
-    background-color: #292110;
+    background-color: hsl(calc(var(--prestigeHue) + 10.8), 43.86%, 11.18%);
     color: #d8d8d8;
     padding: 0;
     margin: 0;
